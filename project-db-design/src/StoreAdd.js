@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { AiFillDashboard } from 'react-icons/ai';
 import { FaUsers } from 'react-icons/fa';
@@ -13,13 +13,49 @@ import { AiTwotoneSetting } from 'react-icons/ai';
 import { HiOutlineLogout } from 'react-icons/hi';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Row,Col,FloatingLabel,Form} from "react-bootstrap";
+import {Row,Col,FloatingLabel,Form, Button} from "react-bootstrap";
 
 
 
 
 
 function StoreAdd() {
+
+    const [storeData, setStoreData] = useState({});
+
+    const handleBlur = e => {
+        const newData = {...storeData};
+        newData[e.target.name] = e.target.value;
+        setStoreData(newData);
+        console.log(newData);
+    }
+
+
+    const handleSubmit = e => {
+
+        const formData = {
+            name: storeData.name,
+            storeStatus: storeData.storeStatus,
+        }
+
+        fetch('http://localhost:8000/stores', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (!data) {
+                    alert("Store Added successfully!")
+                }
+            })
+            .catch(error => {
+                console.error(error)
+            })
+
+            e.preventDefault();
+    }
     return (
         
         <div className="side-bar ">
@@ -157,22 +193,25 @@ function StoreAdd() {
                     <h2>Stores</h2>
                 </div>
                 <>
+                <form onSubmit={handleSubmit}>
                 <Row className="g-4 mt-4">
                     <Col md>
                         <FloatingLabel controlId="floatingInputGrid" label="Name of the store">
-                        <Form.Control type="text" placeholder="Name of the store" />
+                        <Form.Control type="text" placeholder="Name of the store" name="name" onBlur={handleBlur} />
                         </FloatingLabel>
                     </Col>
                     <Col md>
                         <FloatingLabel controlId="floatingSelectGrid" label="Status">
-                        <Form.Select aria-label="Floating label select example">
-                            <option>Select</option>
-                            <option value="1">Active</option>
-                            <option value="2">Inactive</option>
+                        <Form.Select aria-label="Floating label select example" name="storeStatus" type="text" onBlur={handleBlur}>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
                         </Form.Select>
                         </FloatingLabel>
                     </Col>
                 </Row>
+                <br/>
+                <Button type="submit" variant="primary" className="w-25">Add Store</Button>
+                </form>
                 </>
                 
                 </div>

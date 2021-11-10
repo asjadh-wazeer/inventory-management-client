@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { AiFillDashboard } from 'react-icons/ai';
 import { FaUsers } from 'react-icons/fa';
@@ -13,14 +13,51 @@ import { AiTwotoneSetting } from 'react-icons/ai';
 import { HiOutlineLogout } from 'react-icons/hi';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Row,Col,FloatingLabel,Form} from "react-bootstrap";
-
+import {Row,Col,FloatingLabel,Form, ButtonGroup} from "react-bootstrap";
+import {Button} from 'react-bootstrap';
 
 
 
 
 
 function Category() {
+
+    const [categoryData, setCategoryData] = useState({});
+
+    const handleBlur = e => {
+        const newData = {...categoryData};
+        newData[e.target.name] = e.target.value;
+        setCategoryData(newData);
+        console.log(newData);
+    }
+
+
+
+    const handleSubmit = e => {
+
+        const formData = {
+            name: categoryData.name,
+            categoryType: categoryData.categoryType,
+        }
+
+        fetch('http://localhost:8000/categories', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (!data) {
+                    alert("Category Added successfully!")
+                }
+            })
+            .catch(error => {
+                console.error(error)
+            })
+
+            e.preventDefault();
+    }
     return (
         
         <div className="side-bar ">
@@ -158,22 +195,25 @@ function Category() {
                     <h2>Categories</h2>
                 </div>
                 <>
+                <form onSubmit={handleSubmit}>
                 <Row className="g-4 mt-4">
                     <Col md>
-                        <FloatingLabel controlId="floatingInputGrid" label="Name of the category">
-                        <Form.Control type="text" placeholder="Name of the Category" />
+                        <FloatingLabel controlId="floatingInputGrid" label="Name of the brand">
+                        <Form.Control type="text" placeholder="Name of the brand" name="name" onBlur={handleBlur} />
                         </FloatingLabel>
                     </Col>
                     <Col md>
                         <FloatingLabel controlId="floatingSelectGrid" label="Status">
-                        <Form.Select aria-label="Floating label select example">
-                            <option>Select</option>
-                            <option value="1">Active</option>
-                            <option value="2">Inactive</option>
+                        <Form.Select aria-label="Floating label select example" name="categoryType" type="text" onBlur={handleBlur}>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
                         </Form.Select>
                         </FloatingLabel>
                     </Col>
                 </Row>
+                <br/>
+                <Button type="submit" variant="primary" className="w-25">Add Brand</Button>
+                </form>
                 </>
                 
                 </div>
