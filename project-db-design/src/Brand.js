@@ -19,7 +19,7 @@ import {Row,Col,FloatingLabel,Form} from "react-bootstrap";
 
 
 
-function Sidebar() {
+function Brand() {
     return (
         
         <div className="side-bar ">
@@ -56,6 +56,7 @@ function Sidebar() {
 
 
                         
+
                         <a href="/brand" className="no-underline">
                         <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
                             <div className="w-2/12 flex items-center justify-center text-2xl">
@@ -131,7 +132,7 @@ function Sidebar() {
                             <h4 className="w-8/12 flex items-center text-lg">Profile</h4>
                             <span className="w-2/12 "></span>
                         </div>
-                        
+
                         <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
                         <div className="w-2/12 flex items-center justify-center text-2xl">
                             <AiTwotoneSetting /></div>
@@ -152,7 +153,27 @@ function Sidebar() {
                 
                 <div className="right-side w-4/5 px-6">
 
-                
+                <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded"> 
+                    <h2>Brands</h2>
+                </div>
+                <>
+                <Row className="g-4 mt-4">
+                    <Col md>
+                        <FloatingLabel controlId="floatingInputGrid" label="Name of the brand">
+                        <Form.Control type="text" placeholder="Name of the brand" />
+                        </FloatingLabel>
+                    </Col>
+                    <Col md>
+                        <FloatingLabel controlId="floatingSelectGrid" label="Status">
+                        <Form.Select aria-label="Floating label select example">
+                            <option>Select</option>
+                            <option value="1">Active</option>
+                            <option value="2">Inactive</option>
+                        </Form.Select>
+                        </FloatingLabel>
+                    </Col>
+                </Row>
+                </>
                 
                 </div>
 
@@ -163,4 +184,4 @@ function Sidebar() {
     )
 }
 
-export default Sidebar;
+export default Brand;
