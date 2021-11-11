@@ -12,42 +12,48 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { AiTwotoneSetting } from 'react-icons/ai';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { BsFillTrashFill } from 'react-icons/bs';
+import { AiFillEdit } from 'react-icons/ai';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Row,Col,FloatingLabel,Form, Button, Table} from "react-bootstrap";
+import {Row,Col,FloatingLabel,Form, Table} from "react-bootstrap";
+import {Button} from 'react-bootstrap';
 
 
 
 
 
-function StoreAdd() {
+function Attribute() {
 
-    const [storeData, setStoreData] = useState({});
+    const [attributeData, setAttributeData] = useState({});
 
-    const [storesData, setStoresData] = useState([]);
+    const [attributesData, setAttributesData] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8000/getStores')
-            .then(response => response.json())
-            .then(json => setStoresData(json));
-    }, [])
+        fetch("http://localhost:8000/getAttributes")
+          .then((res) => res.json())
+          .then((data) => {
+            setAttributesData(data);
+          });
+      }, []);
 
     const handleBlur = e => {
-        const newData = {...storeData};
+        const newData = {...attributeData};
         newData[e.target.name] = e.target.value;
-        setStoreData(newData);
+        setAttributeData(newData);
         console.log(newData);
     }
+
 
 
     const handleSubmit = e => {
 
         const formData = {
-            name: storeData.name,
-            storeStatus: storeData.storeStatus,
+            name: attributeData.name,
+            quantity: attributeData.quantity,
+            attributeType: attributeData.attributeType,
         }
 
-        fetch('http://localhost:8000/stores', {
+        fetch('http://localhost:8000/attributes', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(formData)
@@ -56,7 +62,7 @@ function StoreAdd() {
             .then(data => {
                 console.log(data);
                 if (!data) {
-                    alert("Store Added successfully!")
+                    alert("Attribute Added successfully!")
                 }
             })
             .catch(error => {
@@ -201,19 +207,24 @@ function StoreAdd() {
                 <div className="right-side w-4/5 px-6">
 
                 <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded"> 
-                    <h2>Stores</h2>
+                    <h2>Attributes</h2>
                 </div>
                 <>
                 <form onSubmit={handleSubmit}>
                 <Row className="g-4 mt-4">
                     <Col md>
-                        <FloatingLabel controlId="floatingInputGrid" label="Name of the store">
-                        <Form.Control type="text" placeholder="Name of the store" name="name" onBlur={handleBlur} />
+                        <FloatingLabel controlId="floatingInputGrid" label="Name of the attribute">
+                        <Form.Control type="text" placeholder="Name of the attribute" name="name" onBlur={handleBlur} />
+                        </FloatingLabel>
+                    </Col>
+                    <Col md>
+                        <FloatingLabel controlId="floatingInputGrid" label="Total quantity">
+                        <Form.Control type="number" placeholder="Name of the brand" name="quantity"  onBlur={handleBlur}/>
                         </FloatingLabel>
                     </Col>
                     <Col md>
                         <FloatingLabel controlId="floatingSelectGrid" label="Status">
-                        <Form.Select aria-label="Floating label select example" name="storeStatus" type="text" onBlur={handleBlur}>
+                        <Form.Select aria-label="Floating label select example" name="attributeType" type="text" onBlur={handleBlur} >
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                         </Form.Select>
@@ -221,27 +232,29 @@ function StoreAdd() {
                     </Col>
                 </Row>
                 <br/>
-                <Button type="submit" variant="primary" className="w-25">Add Store</Button>
+                <Button type="submit" variant="primary" className="w-25 py-3">Add Attribute</Button>
                 </form>
                 </>
                 
-
                 <br />
           <Table striped bordered hover variant="light" className="text-center">
             <thead>
               <tr>
-                <th>Store Name</th>
-                <th>Store Status</th>
+                <th>Attribute Name</th>
+                <th>Attribute Quantity</th>
+                <th>Attribute Status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {storesData.map((entry) => (
+              {attributesData.map((entry) => (
                 <tr>
                   <td>{entry.name}</td>
-                  <td>{entry.storeStatus}</td>
+                  <td>{entry.quantity}</td>
+                  <td>{entry.attributeType}</td>
                   <td>
-                  <div style={{width: '10px', margin: '0 auto'}}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', paddingTop: '5px' }}>
+                  <AiFillEdit />
                   <BsFillTrashFill />
                   </div>
                   </td>
@@ -249,7 +262,6 @@ function StoreAdd() {
               ))}
             </tbody>
           </Table>
-
                 </div>
 
             </div></div>
@@ -259,4 +271,4 @@ function StoreAdd() {
     )
 }
 
-export default StoreAdd;
+export default Attribute;

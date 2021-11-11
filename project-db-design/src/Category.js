@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { AiFillDashboard } from 'react-icons/ai';
 import { FaUsers } from 'react-icons/fa';
@@ -11,9 +11,10 @@ import { AiFillSignal } from 'react-icons/ai';
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiTwotoneSetting } from 'react-icons/ai';
 import { HiOutlineLogout } from 'react-icons/hi';
+import { BsFillTrashFill } from 'react-icons/bs';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Row,Col,FloatingLabel,Form, ButtonGroup} from "react-bootstrap";
+import {Row,Col,FloatingLabel,Form, ButtonGroup, Table} from "react-bootstrap";
 import {Button} from 'react-bootstrap';
 
 
@@ -23,6 +24,14 @@ import {Button} from 'react-bootstrap';
 function Category() {
 
     const [categoryData, setCategoryData] = useState({});
+
+    const [categoriesData, setCategoriesData] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:8000/getCategories')
+            .then(response => response.json())
+            .then(json => setCategoriesData(json));
+    }, [])
 
     const handleBlur = e => {
         const newData = {...categoryData};
@@ -122,12 +131,14 @@ function Category() {
                         </div>
                         </a>
 
-                        <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
+                        <a href="/attribute" className="no-underline">
+                        <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
                         <div className="w-2/12 flex items-center justify-center text-2xl">
                             <FaLayerGroup /></div>
                             <h4 className="w-8/12 flex items-center text-lg">Attributes</h4>
-                            
+                            <span className="w-2/12 "></span>
                         </div>
+                        </a>
 
                         <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
                         <div className="w-2/12 flex items-center justify-center text-2xl">
@@ -212,10 +223,34 @@ function Category() {
                     </Col>
                 </Row>
                 <br/>
-                <Button type="submit" variant="primary" className="w-25">Add Brand</Button>
+                <Button type="submit" variant="primary" className="w-25">Add Category</Button>
                 </form>
                 </>
                 
+
+                <br />
+          <Table striped bordered hover variant="light" className="text-center">
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th>Category Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {categoriesData.map((entry) => (
+                <tr>
+                  <td>{entry.name}</td>
+                  <td>{entry.categoryType}</td>
+                  <td>
+                  <div style={{width: '10px', margin: '0 auto'}}>
+                  <BsFillTrashFill />
+                  </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
                 </div>
 
             </div></div>

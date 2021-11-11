@@ -83,12 +83,14 @@ function Sidebar() {
                         </div>
                         </a>
 
-                        <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
+                        <a href="/attribute" className="no-underline">
+                        <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
                         <div className="w-2/12 flex items-center justify-center text-2xl">
                             <FaLayerGroup /></div>
                             <h4 className="w-8/12 flex items-center text-lg">Attributes</h4>
-                            
+                            <span className="w-2/12 "></span>
                         </div>
+                        </a>
 
                         <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
                         <div className="w-2/12 flex items-center justify-center text-2xl">

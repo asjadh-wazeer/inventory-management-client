@@ -6,6 +6,7 @@ import Category from './Category';
 import StoreAdd from "./StoreAdd";
 
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import Attribute from './Attribute';
 
 function App() {
   return (
@@ -16,8 +17,7 @@ function App() {
             <Route path="/brand" element={<Brand/>} />
             <Route path="/store" element={<StoreAdd/>} />
             <Route path="/category" element={<Category/>} />
-              
-            
+            <Route path="/attribute" element={<Attribute/>} />
         </Routes>
       </div>
     </Router>
