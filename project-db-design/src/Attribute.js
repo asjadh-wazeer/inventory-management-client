@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { AiFillDashboard } from 'react-icons/ai';
 import { FaUsers } from 'react-icons/fa';
 import { BiChevronLeft } from 'react-icons/bi';
@@ -13,14 +12,10 @@ import { AiTwotoneSetting } from 'react-icons/ai';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { AiFillEdit } from 'react-icons/ai';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,FloatingLabel,Form, Table} from "react-bootstrap";
 import {Button} from 'react-bootstrap';
-
-
-
-
+import "./Attribute.css";
 
 function Attribute() {
 
@@ -74,8 +69,8 @@ function Attribute() {
     return (
         
         <div className="side-bar ">
-            <div className="w-full flex">
-                <div className="left-side w-1/5 bg-black">
+            <div className="attributeContainer">
+                <div className="left-side w-1/5 bg-black sideBar">
                     <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded">
                         <h2>Admin</h2>
                     </div>
@@ -204,7 +199,7 @@ function Attribute() {
                     </div>
                 </div>
                 
-                <div className="right-side w-4/5 px-6">
+                <div className="right-side w-4/5 px-6 attributeContent">
 
                 <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded"> 
                     <h2>Attributes</h2>
