@@ -66,6 +66,22 @@ function Attribute() {
 
             e.preventDefault();
     }
+
+
+    const handleDelete = (id) => {
+        fetch(`http://localhost:8000/deleteAttribute/${id}`, {
+            method: 'DELETE',
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data) {
+                const newAttributeData = attributesData.filter(
+                    attribute => attribute._id !== id
+                )
+                setAttributesData(newAttributeData);
+            }
+        })
+    }
     return (
         
         <div className="side-bar ">
@@ -250,7 +266,7 @@ function Attribute() {
                   <td>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', paddingTop: '5px' }}>
                   <AiFillEdit />
-                  <BsFillTrashFill />
+                  <BsFillTrashFill onClick={() => handleDelete(entry._id)} style={{cursor: 'pointer'}} />
                   </div>
                   </td>
                 </tr>

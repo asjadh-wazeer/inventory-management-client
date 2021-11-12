@@ -60,6 +60,22 @@ function StoreAdd() {
 
             e.preventDefault();
     }
+
+
+    const handleDelete = (id) => {
+        fetch(`http://localhost:8000/deleteStore/${id}`, {
+            method: 'DELETE',
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data) {
+                const newStoreData = storesData.filter(
+                    store => store._id !== id
+                )
+                setStoresData(newStoreData);
+            }
+        })
+    }
     return (
         
         <div className="side-bar ">
@@ -237,7 +253,7 @@ function StoreAdd() {
                   <td>{entry.storeStatus}</td>
                   <td>
                   <div style={{width: '10px', margin: '0 auto'}}>
-                  <BsFillTrashFill />
+                  <BsFillTrashFill onClick={() => handleDelete(entry._id)} style={{cursor: 'pointer'}} />
                   </div>
                   </td>
                 </tr>

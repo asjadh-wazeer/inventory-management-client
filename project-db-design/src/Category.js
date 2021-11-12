@@ -68,6 +68,22 @@ function Category() {
 
             e.preventDefault();
     }
+
+
+    const handleDelete = (id) => {
+        fetch(`http://localhost:8000/deleteCategory/${id}`, {
+            method: 'DELETE',
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data) {
+                const newCategoryData = categoriesData.filter(
+                    specificCategory => specificCategory._id !== id
+                )
+                setCategoriesData(newCategoryData);
+            }
+        })
+    }
     return (
         
         <div className="side-bar ">
@@ -245,7 +261,7 @@ function Category() {
                   <td>{entry.categoryType}</td>
                   <td>
                   <div style={{width: '10px', margin: '0 auto'}}>
-                  <BsFillTrashFill />
+                  <BsFillTrashFill onClick={() => handleDelete(entry._id)} style={{cursor: 'pointer'}} />
                   </div>
                   </td>
                 </tr>

@@ -69,6 +69,26 @@ function Brand() {
 
     e.preventDefault();
   };
+
+
+  const handleDelete = (id) => {
+    console.log(id);
+    fetch(`http://localhost:8000/deleteBrand/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result) {
+          const newEntryData = brandsData.filter(
+            (specificEntry) => specificEntry._id !== id
+          );
+          setBrandsData(newEntryData);
+        }
+      });
+  };
+
+
   return (
     <div className="side-bar">
       <div className="brandContainer">
@@ -263,7 +283,7 @@ function Brand() {
                   <td>{entry.brandType}</td>
                   <td>
                   <div style={{width: '10px', margin: '0 auto'}}>
-                  <BsFillTrashFill />
+                  <BsFillTrashFill onClick={() => handleDelete(entry._id)} style={{cursor: 'pointer'}} />
                   </div>
                   </td>
                 </tr>
