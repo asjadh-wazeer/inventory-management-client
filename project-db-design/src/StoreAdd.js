@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { AiFillDashboard } from 'react-icons/ai';
 import { FaUsers } from 'react-icons/fa';
 import { BiChevronLeft } from 'react-icons/bi';
@@ -12,13 +11,9 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { AiTwotoneSetting } from 'react-icons/ai';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { BsFillTrashFill } from 'react-icons/bs';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,FloatingLabel,Form, Button, Table} from "react-bootstrap";
-
-
-
-
+import "./Store.css";
 
 function StoreAdd() {
 
@@ -68,8 +63,8 @@ function StoreAdd() {
     return (
         
         <div className="side-bar ">
-            <div className="w-full flex">
-                <div className="left-side w-1/5 bg-black">
+            <div className="storeContainer">
+                <div className="left-side w-1/5 bg-black sideBar">
                     <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded">
                         <h2>Admin</h2>
                     </div>
@@ -198,7 +193,7 @@ function StoreAdd() {
                     </div>
                 </div>
                 
-                <div className="right-side w-4/5 px-6">
+                <div className="right-side w-4/5 px-6 storeContent">
 
                 <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded"> 
                     <h2>Stores</h2>

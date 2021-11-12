@@ -12,8 +12,9 @@ import { AiOutlineUser } from "react-icons/ai";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { HiOutlineLogout } from "react-icons/hi";
 import { BsFillTrashFill } from 'react-icons/bs';
-
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import "./Brand.css";
 import {
   Row,
   Col,
@@ -69,9 +70,9 @@ function Brand() {
     e.preventDefault();
   };
   return (
-    <div className="side-bar ">
-      <div className="w-full flex">
-        <div className="left-side w-1/5 bg-black">
+    <div className="side-bar">
+      <div className="brandContainer">
+        <div className="left-side w-1/5 bg-black sideBar">
           <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded">
             <h2>Admin</h2>
           </div>
@@ -206,7 +207,7 @@ function Brand() {
           </div>
         </div>
 
-        <div className="right-side w-4/5 px-6">
+        <div className="right-side w-4/5 px-6 brandContent">
           <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded">
             <h2>Brands</h2>
           </div>

@@ -12,10 +12,11 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { AiTwotoneSetting } from 'react-icons/ai';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { BsFillTrashFill } from 'react-icons/bs';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Row,Col,FloatingLabel,Form, ButtonGroup, Table} from "react-bootstrap";
 import {Button} from 'react-bootstrap';
+
+import "./Category.css";
 
 
 
@@ -70,8 +71,8 @@ function Category() {
     return (
         
         <div className="side-bar ">
-            <div className="w-full flex">
-                <div className="left-side w-1/5 bg-black">
+            <div className="categoryContainer">
+                <div className="left-side w-1/5 bg-black sideBar">
                     <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded">
                         <h2>Admin</h2>
                     </div>
@@ -200,7 +201,7 @@ function Category() {
                     </div>
                 </div>
                 
-                <div className="right-side w-4/5 px-6">
+                <div className="right-side w-4/5 px-6 categoryContent">
 
                 <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded"> 
                     <h2>Categories</h2>
