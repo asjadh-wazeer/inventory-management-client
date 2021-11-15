@@ -1,0 +1,25 @@
+@media(max-width: 668px){
+    .cont-main {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .cont-first{
+        width: 100%;
+        
+    }
+    .addProductContainer{
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .cont-second {
+        width: 100%;
+        margin-bottom: 20px;
+        
+    }
+    .addProductContent{
+        width: 100vw;
+    }
+}
