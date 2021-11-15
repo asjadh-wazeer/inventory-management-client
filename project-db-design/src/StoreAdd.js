@@ -235,8 +235,6 @@ function StoreAdd() {
                 <Button type="submit" variant="primary" className="w-25">Add Store</Button>
                 </form>
                 </>
-                
-
                 <br />
           <Table striped bordered hover variant="light" className="text-center">
             <thead>
