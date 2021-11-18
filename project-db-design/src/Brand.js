@@ -165,15 +165,25 @@ function Brand() {
               </div>
             </a>
 
-            <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
+            <a href="/addProduct" className="no-underline">
+            <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
-                <FaBoxOpen />
+                <FaLayerGroup />
               </div>
-              <h4 className="w-8/12 flex items-center text-lg">Products</h4>
-              <div className="w-2/12 flex items-center justify-center">
-                <BiChevronLeft />
-              </div>
+              <h4 className="w-8/12 flex items-center text-lg">Add Product</h4>
+              <span className="w-2/12 "></span>
             </div>
+          </a>
+
+          <a href="/manageProduct" className="no-underline">
+            <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
+              <div className="w-2/12 flex items-center justify-center text-2xl">
+                <FaLayerGroup />
+              </div>
+              <h4 className="w-8/12 flex items-center text-lg">Manage Product</h4>
+              <span className="w-2/12 "></span>
+            </div>
+          </a>
 
             <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
