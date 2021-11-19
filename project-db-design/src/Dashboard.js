@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+ 
 import { AiFillDashboard } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
 import { BiChevronLeft } from "react-icons/bi";
@@ -11,10 +11,16 @@ import { AiFillSignal } from "react-icons/ai";
 import { AiOutlineUser } from "react-icons/ai";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { HiOutlineLogout } from "react-icons/hi";
-import { BsFillTrashFill } from "react-icons/bs";
+import { BsFillTrashFill } from 'react-icons/bs';
+ 
+import { HiOutlineShoppingBag } from 'react-icons/hi';
+import { MdBarChart } from "react-icons/md";
+import { FaUserFriends } from "react-icons/fa";
+import { IoIosHome } from 'react-icons/io';
+ 
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import "./Brand.css";
+ 
+import "./Dashboard.css";
 import {
   Row,
   Col,
@@ -24,13 +30,12 @@ import {
   Table,
 } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-
-function Brand() {
+ 
+function Dashboard() {
   const [brandData, setBrandData] = useState({});
-
+ 
   const [brandsData, setBrandsData] = useState([]);
-
+ 
   useEffect(() => {
     fetch("http://localhost:8000/getBrands")
       .then((res) => res.json())
@@ -38,20 +43,20 @@ function Brand() {
         setBrandsData(data);
       });
   }, []);
-
+ 
   const handleBlur = (e) => {
     const newData = { ...brandData };
     newData[e.target.name] = e.target.value;
     setBrandData(newData);
     console.log(newData);
   };
-
+ 
   const handleSubmit = (e) => {
     const formData = {
       name: brandData.name,
       brandType: brandData.brandType,
     };
-
+ 
     fetch("http://localhost:8000/addBrand", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -67,10 +72,11 @@ function Brand() {
       .catch((error) => {
         console.error(error);
       });
-
+ 
     e.preventDefault();
   };
-
+ 
+ 
   const handleDelete = (id) => {
     console.log(id);
     fetch(`http://localhost:8000/deleteBrand/${id}`, {
@@ -87,26 +93,25 @@ function Brand() {
         }
       });
   };
-
+ 
+ 
   return (
     <div className="side-bar">
-      <div className="brandContainer">
+      <div className="mainContainer w-full">
         <div className="left-side w-1/5 bg-black sideBar">
           <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded">
             <h2>Admin</h2>
           </div>
-
-          <div className="text-gray-400 mt-4">
-          <Link to="/dashboard" className="no-underline">
-              <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
-                <div className="w-2/12 flex items-center justify-center text-2xl">
-                  <BsTagsFill />
-                </div>
-                <h4 className="w-8/12 flex items-center text-lg">Dashboard</h4>
-                <span className="w-2/12 "></span>
+ 
+          <div className="text-gray-400 ">
+            <div className="flex font-medium w-full my-4 ml-3 hover:text-gray-300 cursor-pointer">
+              <div className="w-2/12 flex items-center justify-center text-2xl">
+                <AiFillDashboard />
               </div>
-            </Link>
-
+              <h4 className="w-8/12 flex items-center text-lg">Dashboard</h4>
+              <span className="w-2/12 "></span>
+            </div>
+ 
             <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
                 <FaUsers />
@@ -116,7 +121,7 @@ function Brand() {
                 <BiChevronLeft />
               </div>
             </div>
-
+ 
             <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
                 <FaLayerGroup />
@@ -126,7 +131,7 @@ function Brand() {
                 <BiChevronLeft />
               </div>
             </div>
-
+ 
             <a href="/brand" className="no-underline">
               <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
                 <div className="w-2/12 flex items-center justify-center text-2xl">
@@ -145,7 +150,7 @@ function Brand() {
                 <span className="w-2/12 "></span>
               </div>
             </a>
-
+ 
             <a href="/store" className="no-underline">
               <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
                 <div className="w-2/12 flex items-center justify-center text-2xl">
@@ -155,7 +160,7 @@ function Brand() {
                 <span className="w-2/12 "></span>
               </div>
             </a>
-
+ 
             <a href="/attribute" className="no-underline">
               <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
                 <div className="w-2/12 flex items-center justify-center text-2xl">
@@ -165,31 +170,27 @@ function Brand() {
                 <span className="w-2/12 "></span>
               </div>
             </a>
-
+ 
             <a href="/addProduct" className="no-underline">
-              <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
-                <div className="w-2/12 flex items-center justify-center text-2xl">
-                  <FaLayerGroup />
-                </div>
-                <h4 className="w-8/12 flex items-center text-lg">
-                  Add Product
-                </h4>
-                <span className="w-2/12 "></span>
+            <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
+              <div className="w-2/12 flex items-center justify-center text-2xl">
+                <FaLayerGroup />
               </div>
-            </a>
-
-            <a href="/manageProduct" className="no-underline">
-              <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
-                <div className="w-2/12 flex items-center justify-center text-2xl">
-                  <FaLayerGroup />
-                </div>
-                <h4 className="w-8/12 flex items-center text-lg">
-                  Manage Product
-                </h4>
-                <span className="w-2/12 "></span>
+              <h4 className="w-8/12 flex items-center text-lg">Add Product</h4>
+              <span className="w-2/12 "></span>
+            </div>
+          </a>
+ 
+          <a href="/manageProduct" className="no-underline">
+            <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
+              <div className="w-2/12 flex items-center justify-center text-2xl">
+                <FaLayerGroup />
               </div>
-            </a>
-
+              <h4 className="w-8/12 flex items-center text-lg">Manage Product</h4>
+              <span className="w-2/12 "></span>
+            </div>
+          </a>
+ 
             <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
                 <BiDollar />
@@ -199,7 +200,7 @@ function Brand() {
                 <BiChevronLeft />
               </div>
             </div>
-
+ 
             <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
                 <AiFillSignal />
@@ -207,7 +208,7 @@ function Brand() {
               <h4 className="w-8/12 flex items-center text-lg">Reports</h4>
               <span className="w-2/12 "></span>
             </div>
-
+ 
             <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
                 <FaLayerGroup />
@@ -215,7 +216,7 @@ function Brand() {
               <h4 className="w-8/12 flex items-center text-lg">Company</h4>
               <span className="w-2/12 "></span>
             </div>
-
+ 
             <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
                 <AiOutlineUser />
@@ -223,7 +224,7 @@ function Brand() {
               <h4 className="w-8/12 flex items-center text-lg">Profile</h4>
               <span className="w-2/12 "></span>
             </div>
-
+ 
             <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
                 <AiTwotoneSetting />
@@ -231,7 +232,7 @@ function Brand() {
               <h4 className="w-8/12 flex items-center text-lg">Setting</h4>
               <span className="w-2/12 "></span>
             </div>
-
+ 
             <div className="flex font-medium mb-4 ml-3 hover:text-gray-300 cursor-pointer">
               <div className="w-2/12 flex items-center justify-center text-2xl">
                 <HiOutlineLogout />
@@ -241,77 +242,70 @@ function Brand() {
             </div>
           </div>
         </div>
-
-        <div className="right-side w-4/5 px-6 brandContent">
-          <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded">
-            <h2>Brands</h2>
-          </div>
-          <>
-            <form onSubmit={handleSubmit}>
-              <Row className="g-4 mt-4">
-                <Col md>
-                  <FloatingLabel
-                    controlId="floatingInputGrid"
-                    label="Name of the brand"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="Name of the brand"
-                      name="name"
-                      onBlur={handleBlur}
-                    />
-                  </FloatingLabel>
-                </Col>
-                <Col md>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Status">
-                    <Form.Select
-                      aria-label="Floating label select example"
-                      name="brandType"
-                      type="text"
-                      onBlur={handleBlur}
-                    >
-                      <option value="Active">Active</option>
-                      <option value="Inactive">Inactive</option>
-                    </Form.Select>
-                  </FloatingLabel>
-                </Col>
-              </Row>
-              <br />
-              <Button type="submit" variant="primary" className="w-25">
-                Add Brand
-              </Button>
-            </form>
-          </>
-          <br />
-          <Table striped bordered hover variant="light" className="text-center">
-            <thead>
-              <tr>
-                <th>Brand Name</th>
-                <th>Brand Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {brandsData.map((entry) => (
-                <tr>
-                  <td>{entry.name}</td>
-                  <td>{entry.brandType}</td>
-                  <td>
-                    <div style={{ width: "10px", margin: "0 auto" }}>
-                      <BsFillTrashFill
-                        onClick={() => handleDelete(entry._id)}
-                        style={{ cursor: "pointer" }}
-                      />
+ 
+        <div className="right-side w-4/5 px-6 brandContent ">
+       
+        <div className="w-full nav-bar items-center pt-4">
+            <div className="d-flex nav-left">
+                <h4 className="font-bold text-2xl">Dashboard </h4> &nbsp;
+                <h4 className="font-medium text-gray-700 text-base">Controll panel</h4>
+            </div>
+            <div className="d-flex nav-right">
+                <h4 className="d-flex pr-2 text-lg items-center"><IoIosHome/> Home</h4>
+                <h4 className="text-lg items-center">Dashboard</h4>
+            </div>
+ 
+        </div>
+ 
+        <div className="py-12 box-container w-full">
+           
+                    <div className="w-full d-flex boxes">
+                      <div className="w-1/4 bg-blue-600 d-flex items-center justify-center mr-6 box py-3">
+                          <div className="text-white px-3">
+                            <h1 className="font-bold">0</h1>
+                            <h4 className="text-base">Total Products</h4>
+                          </div>
+                          <div className="text-8xl text-gray-600"><HiOutlineShoppingBag /></div>
+                      </div>
+ 
+                      <div className="w-1/4 bg-green-600 d-flex items-center justify-center mr-6 box">
+                          <div className="text-white px-3">
+                            <h1 className="font-bold">0</h1>
+                            <h4 className="text-base one-line">Total Paid Orders</h4>
+                          </div>
+                          <div className="text-8xl text-gray-600"><MdBarChart /></div>
+                      </div>
+ 
+                     
+ 
+                      <div className="w-1/4 bg-yellow-500 d-flex items-center justify-center mr-6 box">
+                          <div className="text-white px-3">
+                            <h1 className="font-bold">0</h1>
+                            <h4 className="text-base one-line">Total Users</h4>
+                          </div>
+                          <div className="text-8xl text-gray-600 px-3"><FaUserFriends /></div>
+                      </div>
+ 
+                      <div className="w-1/4 bg-red-600 d-flex items-center justify-center box">
+                          <div className="text-white px-3">
+                            <h1 className="font-bold">0</h1>
+                            <h4 className="text-base">Total Stores</h4>
+                          </div>
+                          <div className="text-8xl text-gray-600"><IoIosHome /></div>
+                      </div>
                     </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+        </div>
+                   
+                 
+           
         </div>
       </div>
+     
+                 
     </div>
+ 
+   
   );
 }
-
-export default Brand;
+ 
+export default Dashboard;

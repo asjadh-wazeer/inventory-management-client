@@ -25,6 +25,7 @@ const Login = () => {
 
       const handleGoogleSignIn = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
+            
 
         firebase.auth()
         .signInWithPopup(provider)
@@ -37,7 +38,7 @@ const Login = () => {
             const signedInUser = {name: displayName, email, photoURL};
             setLoggedInUser(signedInUser);
             // history.replace(from);
-            navigate('/brand')
+            navigate('/profile')
         }).catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;

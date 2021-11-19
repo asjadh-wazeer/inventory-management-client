@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-import { AiFillDashboard } from "react-icons/ai";
+import "./PlaceOrder.css";
 import { FaUsers } from "react-icons/fa";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaLayerGroup } from "react-icons/fa";
@@ -12,47 +11,46 @@ import { AiOutlineUser } from "react-icons/ai";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { HiOutlineLogout } from "react-icons/hi";
 import { BsFillTrashFill } from "react-icons/bs";
-import "bootstrap/dist/css/bootstrap.min.css";
-
-import "./Brand.css";
-import {
-  Row,
-  Col,
-  FloatingLabel,
-  Form,
-  ButtonGroup,
-  Table,
-} from "react-bootstrap";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Form, Button, DropdownButton, Dropdown } from "react-bootstrap";
 
-function Brand() {
-  const [brandData, setBrandData] = useState({});
+const PlaceOrder = () => {
+  const [orderData, setOrderData] = useState({});
+  const [dropdownValue, setDropdownValue] = useState("");
 
-  const [brandsData, setBrandsData] = useState([]);
+  const getDropdownValue = (dropdownValue) => {
+    setDropdownValue(dropdownValue);
+    const updatedProduct = { ...orderData };
+    updatedProduct.product = dropdownValue;
+    setOrderData(updatedProduct);
+  };
+  console.log(orderData);
 
+  const [productsData, setProductsData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8000/getBrands")
+    fetch("http://localhost:8000/getProducts")
       .then((res) => res.json())
       .then((data) => {
-        setBrandsData(data);
+        setProductsData(data);
       });
   }, []);
 
   const handleBlur = (e) => {
-    const newData = { ...brandData };
+    const newData = { ...orderData };
     newData[e.target.name] = e.target.value;
-    setBrandData(newData);
-    console.log(newData);
+    setOrderData(newData);
+    // console.log(newData);
   };
 
   const handleSubmit = (e) => {
     const formData = {
-      name: brandData.name,
-      brandType: brandData.brandType,
+      name: orderData.name,
+      address: orderData.address,
+      number: orderData.number,
+      product: orderData.product,
     };
 
-    fetch("http://localhost:8000/addBrand", {
+    fetch("http://localhost:8000/addOrder", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(formData),
@@ -61,7 +59,7 @@ function Brand() {
       .then((data) => {
         console.log(data);
         if (!data) {
-          alert("Brand Added successfully!");
+          alert("Order Added successfully!");
         }
       })
       .catch((error) => {
@@ -69,23 +67,6 @@ function Brand() {
       });
 
     e.preventDefault();
-  };
-
-  const handleDelete = (id) => {
-    console.log(id);
-    fetch(`http://localhost:8000/deleteBrand/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        if (result) {
-          const newEntryData = brandsData.filter(
-            (specificEntry) => specificEntry._id !== id
-          );
-          setBrandsData(newEntryData);
-        }
-      });
   };
 
   return (
@@ -97,7 +78,7 @@ function Brand() {
           </div>
 
           <div className="text-gray-400 mt-4">
-          <Link to="/dashboard" className="no-underline">
+            <Link to="/dashboard" className="no-underline">
               <div className="flex font-medium mb-4 ml-3 text-gray-400 hover:text-gray-300 cursor-pointer">
                 <div className="w-2/12 flex items-center justify-center text-2xl">
                   <BsTagsFill />
@@ -244,74 +225,63 @@ function Brand() {
 
         <div className="right-side w-4/5 px-6 brandContent">
           <div className="bg-blue-900 font-bold text-xl text-white py-3 flex items-center justify-center rounded">
-            <h2>Brands</h2>
+            <h2>Add Order</h2>
           </div>
-          <>
-            <form onSubmit={handleSubmit}>
-              <Row className="g-4 mt-4">
-                <Col md>
-                  <FloatingLabel
-                    controlId="floatingInputGrid"
-                    label="Name of the brand"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="Name of the brand"
-                      name="name"
-                      onBlur={handleBlur}
-                    />
-                  </FloatingLabel>
-                </Col>
-                <Col md>
-                  <FloatingLabel controlId="floatingSelectGrid" label="Status">
-                    <Form.Select
-                      aria-label="Floating label select example"
-                      name="brandType"
-                      type="text"
-                      onBlur={handleBlur}
-                    >
-                      <option value="Active">Active</option>
-                      <option value="Inactive">Inactive</option>
-                    </Form.Select>
-                  </FloatingLabel>
-                </Col>
-              </Row>
+
+          <form onSubmit={handleSubmit}>
+          <div className="mt-3">
+              <Form.Group className="mb-3">
+                <Form.Label>Customer Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Your Name"
+                  name="name"
+                  onBlur={handleBlur}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Customer Address</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Your Address"
+                  name="address"
+                  onBlur={handleBlur}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Customer Phone</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Enter Your Number"
+                  name="number"
+                  onBlur={handleBlur}
+                />
+              </Form.Group>
+
               <br />
-              <Button type="submit" variant="primary" className="w-25">
-                Add Brand
+              <DropdownButton
+                id="dropdown-basic-button"
+                title= {dropdownValue || "Product Name"}
+              >
+                {
+                    productsData.map(p => (<Dropdown.Item onClick={() => getDropdownValue(p.name)}>{p.name}</Dropdown.Item>))
+                }
+              </DropdownButton>
+              <br />
+
+              <Button variant="primary" type="submit">
+                Submit
               </Button>
-            </form>
-          </>
+          </div>
+          </form>
+
           <br />
-          <Table striped bordered hover variant="light" className="text-center">
-            <thead>
-              <tr>
-                <th>Brand Name</th>
-                <th>Brand Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {brandsData.map((entry) => (
-                <tr>
-                  <td>{entry.name}</td>
-                  <td>{entry.brandType}</td>
-                  <td>
-                    <div style={{ width: "10px", margin: "0 auto" }}>
-                      <BsFillTrashFill
-                        onClick={() => handleDelete(entry._id)}
-                        style={{ cursor: "pointer" }}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Brand;
+export default PlaceOrder;

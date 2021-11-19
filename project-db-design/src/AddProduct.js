@@ -20,12 +20,21 @@ import {
   Form,
   ButtonGroup,
   Table,
+  DropdownButton,
+  Dropdown,
 } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import "./AddProduct.css";
 function AddProduct() {
   const [product, setProduct] = useState({});
-
+  const [dropdownValue, setDropdownValue] = useState("");
+  const getDropdownValue = (dropdownValue) => {
+    setDropdownValue(dropdownValue);
+    const updatedProduct = { ...product };
+    updatedProduct.store = dropdownValue;
+    setProduct(updatedProduct);
+  };
+  console.log(product);
   const handleBlur = (e) => {
     const newData = { ...product };
     newData[e.target.name] = e.target.value;
@@ -67,42 +76,6 @@ function AddProduct() {
     e.preventDefault();
   };
 
-  const colourStyles = {
-    control: (styles) => ({
-      ...styles,
-      backgroundColor: "white",
-      boxShadow: "none",
-      border: "2px solid #ced4da",
-      "&:hover": { border: "2px solid #fd7e15" },
-      height: "calc(2em + 0.75rem + 2px)",
-    }),
-    option: (styles, { isDisabled, isFocused, isSelected }) => {
-      return {
-        ...styles,
-        backgroundColor: isDisabled
-          ? null
-          : isSelected
-          ? "#fd7709"
-          : isFocused
-          ? "#fd770928"
-          : null,
-        color: isDisabled
-          ? null
-          : isSelected
-          ? "white"
-          : isFocused
-          ? "black"
-          : "black",
-        cursor: isDisabled ? "not-allowed" : "default",
-        ":active": {
-          ...styles[":active"],
-          backgroundColor:
-            !isDisabled && (isSelected ? "#fd7709" : "#fd770948"),
-        },
-      };
-    },
-  };
-
   const [brandsData, setBrandsData] = useState([]);
   useEffect(() => {
     fetch("http://localhost:8000/getBrands")
@@ -111,18 +84,6 @@ function AddProduct() {
         setBrandsData(data);
       });
   }, []);
-
-  const options = brandsData.map((brand) => ({
-    value: brand.name,
-    label: brand.name,
-  }));
-  // console.log(options);
-  const defaultOption = {
-    value: "Select",
-    label: "Select",
-  };
-
-  const [selectedOption, setSelectedOption] = useState(defaultOption);
 
   const [categoriesData, setCategoriesData] = useState([]);
   useEffect(() => {
@@ -143,10 +104,10 @@ function AddProduct() {
       .then((json) => setStoresData(json));
   }, []);
 
-  const storeOptions = storesData.map((storeData) => ({
-    value: storeData.name,
-    label: storeData.name,
-  }));
+  // const storeOptions = storesData.map((storeData) => ({
+  //   value: storeData.name,
+  //   label: storeData.name,
+  // }));
 
   return (
     <div className="right-side w-full  addProductContainer d-flex">
@@ -238,7 +199,9 @@ function AddProduct() {
               <div className="w-2/12 flex items-center justify-center text-2xl">
                 <FaLayerGroup />
               </div>
-              <h4 className="w-8/12 flex items-center text-lg">Manage Product</h4>
+              <h4 className="w-8/12 flex items-center text-lg">
+                Manage Product
+              </h4>
               <span className="w-2/12 "></span>
             </div>
           </a>
@@ -388,49 +351,6 @@ function AddProduct() {
                   </Form.Select>
                 </FloatingLabel>
 
-                <Form.Select
-                  onChange={(option) => setSelectedOption(option)}
-                  defaultValue={defaultOption}
-                  options={options}
-                  styles={colourStyles}
-                  name="brand"
-                  type="text"
-                  onBlur={handleBlur}
-                >
-                  <option value={brandsData[0]}></option>
-
-                  {/* <Select
-                onChange={(option) => setSelectedOption(option)}
-                defaultValue={defaultOption}
-                options={options}
-                styles={colourStyles}
-                name="brand"
-                onBlur={handleBlur}
-              /> */}
-                </Form.Select>
-                <br />
-                <label style={{ fontWeight: "bold" }}>Category</label>
-                <Select
-                  onChange={(option) => setSelectedOption(option)}
-                  defaultValue={defaultOption}
-                  options={categoryOptions}
-                  styles={colourStyles}
-                  type="text"
-                  name="category"
-                  onBlur={handleBlur}
-                />
-                <br />
-
-                <label style={{ fontWeight: "bold" }}>Store</label>
-
-                <Select
-                  onChange={(option) => setSelectedOption(option)}
-                  defaultValue={defaultOption}
-                  options={storeOptions}
-                  styles={colourStyles}
-                  name="store"
-                />
-
                 <br />
 
                 <FloatingLabel controlId="floatingSelectGrid" label="Status">
@@ -444,6 +364,17 @@ function AddProduct() {
                     <option value="Inactive">Inactive</option>
                   </Form.Select>
                 </FloatingLabel>
+                <br />
+                <DropdownButton
+                  id="dropdown-basic-button"
+                  title={dropdownValue || "Store name"}
+                >
+                  {storesData.map((b) => (
+                    <Dropdown.Item onClick={() => getDropdownValue(b.name)}>
+                      {b.name}
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
               </div>
             </div>
 
